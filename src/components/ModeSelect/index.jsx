@@ -1,13 +1,13 @@
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
+import { useColorScheme } from '@mui/material'
+import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
-import Box from '@mui/material/Box'
-import LightModeIcon from '@mui/icons-material/LightMode'
-import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
-import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
-import React from 'react'
-import { useColorScheme } from '@mui/material'
+
 
 function ModeSelect() {
 
