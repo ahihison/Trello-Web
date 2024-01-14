@@ -16,6 +16,7 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import Tooltip from '@mui/material/Tooltip'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Profile from './Menus/Profile'
+import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck'
 function AppBar() {
   return (
     <Box px={2} sx={{
@@ -39,7 +40,7 @@ function AppBar() {
           <Recent/>
           <Starred/>
           <More/>
-          <Button variant="outlined">Create</Button>
+          <Button variant="outlined" startIcon ={<LibraryAddCheckIcon/>}>Create</Button>
         </Box>
 
       </Box>
