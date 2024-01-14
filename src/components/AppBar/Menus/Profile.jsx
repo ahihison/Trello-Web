@@ -31,7 +31,7 @@ function Profile() {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <Avatar sx={{ width: 32, height: 32 }} src="https://scontent.fsgn5-12.fna.fbcdn.net/v/t1.6435-9/126070927_1086903931762763_7456376576950448604_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=be3454&_nc_eui2=AeE5xv4UP1hiGMjpSGuP9w8gSL9Tap6LKhxIv1NqnosqHCNMLf2bEknhOSrOj635pDOCy3zvvEgAKVKiVHs5hnmY&_nc_ohc=lhV71wojYdgAX8go7mP&_nc_ht=scontent.fsgn5-12.fna&oh=00_AfANpVAMQFuJbh85jS627KS_MmmxGp31gApkmlkztMT80g&oe=65C780DB" alt="Sonnguyenavatar"/>
+          <Avatar sx={{ width: 34, height: 34 }} src="https://scontent.fsgn5-12.fna.fbcdn.net/v/t1.6435-9/126070927_1086903931762763_7456376576950448604_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=be3454&_nc_eui2=AeE5xv4UP1hiGMjpSGuP9w8gSL9Tap6LKhxIv1NqnosqHCNMLf2bEknhOSrOj635pDOCy3zvvEgAKVKiVHs5hnmY&_nc_ohc=lhV71wojYdgAX8go7mP&_nc_ht=scontent.fsgn5-12.fna&oh=00_AfANpVAMQFuJbh85jS627KS_MmmxGp31gApkmlkztMT80g&oe=65C780DB" alt="Sonnguyenavatar"/>
         </IconButton>
       </Tooltip>
       <Menu
