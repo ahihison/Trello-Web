@@ -20,7 +20,7 @@ function Profile() {
   }
 
   return (
-    <Box>
+    <Box >
 
       <Tooltip title="Account settings">
         <IconButton

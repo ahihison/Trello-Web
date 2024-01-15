@@ -11,12 +11,12 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 const MENU_STYLES = {
-  color:'primary.main',
-  bgcolor:'white',
+  color:'white',
+  bgcolor:'transparent',
   border:'none',
   paddingX:'5px',
   borderRadius:'4px',
-  '& .MuiChip-icon': { color:'primary.main' },
+  '& .MuiChip-icon': { color:'white' },
   '&:hover':{ bgcolor:'primary.50' }
 }
 function BoardBar() {
@@ -30,7 +30,8 @@ function BoardBar() {
       justifyContent: 'space-between',
       gap:2,
       overflowX:'auto',
-      borderTop: '1px solid #00bfa5'
+      borderBottom: '1px solid white',
+      bgcolor:(theme) => (theme.palette.mode === 'dark' ?'#172b4d':'#1976d2')
     }}>
       <Box sx={{ display:'flex', alignItems:'center', gap:2 }}>
         <Chip
@@ -60,12 +61,18 @@ function BoardBar() {
           sx={MENU_STYLES} />
       </Box>
       <Box sx={{ display:'flex', alignItems:'center', gap:2 }}>
-        <Button variant="outlined" startIcon={<PersonAddIcon/>}>Invite</Button>
+        <Button
+          sx={{ color:'white',
+            borderColor:'white',
+            '&:hover':{ borderColor:'white' } }}
+          variant="outlined"
+          startIcon={<PersonAddIcon/>}>Invite</Button>
         <AvatarGroup max={7}
           sx={{ '& .MuiAvatar-root':{
             width: 34,
             height: 34,
-            fontSize:16 } }}
+            fontSize:16,
+            border:'none' } }}
         >
           <Tooltip title="SownDev">
             <Avatar alt="Sown Dev" src="https://scontent.fsgn5-12.fna.fbcdn.net/v/t1.6435-9/126070927_1086903931762763_7456376576950448604_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=be3454&_nc_eui2=AeE5xv4UP1hiGMjpSGuP9w8gSL9Tap6LKhxIv1NqnosqHCNMLf2bEknhOSrOj635pDOCy3zvvEgAKVKiVHs5hnmY&_nc_ohc=lhV71wojYdgAX8go7mP&_nc_ht=scontent.fsgn5-12.fna&oh=00_AfANpVAMQFuJbh85jS627KS_MmmxGp31gApkmlkztMT80g&oe=65C780DB" />
