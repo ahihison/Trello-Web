@@ -31,7 +31,8 @@ function BoardBar() {
       gap:2,
       overflowX:'auto',
       borderBottom: '1px solid white',
-      bgcolor:(theme) => (theme.palette.mode === 'dark' ?'#172b4d':'#1976d2')
+      bgcolor:(theme) => (theme.palette.mode === 'dark' ?'#172b4d':'#1976d2'),
+      '&::-webkit-scrollbar-track': { m:2 }
     }}>
       <Box sx={{ display:'flex', alignItems:'center', gap:2 }}>
         <Chip
@@ -72,7 +73,12 @@ function BoardBar() {
             width: 34,
             height: 34,
             fontSize:16,
-            border:'none' } }}
+            border:'none',
+            color:'white',
+            cursor:'pointer',
+            '&:first-child':{ bgcolor:'#a4b0be' }
+
+          } }}
         >
           <Tooltip title="SownDev">
             <Avatar alt="Sown Dev" src="https://scontent.fsgn5-12.fna.fbcdn.net/v/t1.6435-9/126070927_1086903931762763_7456376576950448604_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=be3454&_nc_eui2=AeE5xv4UP1hiGMjpSGuP9w8gSL9Tap6LKhxIv1NqnosqHCNMLf2bEknhOSrOj635pDOCy3zvvEgAKVKiVHs5hnmY&_nc_ohc=lhV71wojYdgAX8go7mP&_nc_ht=scontent.fsgn5-12.fna&oh=00_AfANpVAMQFuJbh85jS627KS_MmmxGp31gApkmlkztMT80g&oe=65C780DB" />
