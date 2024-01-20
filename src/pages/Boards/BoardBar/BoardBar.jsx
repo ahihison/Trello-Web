@@ -10,6 +10,7 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import { capitalizeFirstLetter } from '~/utils/formatters'
 const MENU_STYLES = {
   color:'white',
   bgcolor:'transparent',
@@ -19,7 +20,8 @@ const MENU_STYLES = {
   '& .MuiChip-icon': { color:'white' },
   '&:hover':{ bgcolor:'primary.50' }
 }
-function BoardBar() {
+function BoardBar( { board } ) {
+
   return (
     <div>  <Box sx={{
       width: '100%',
@@ -36,12 +38,12 @@ function BoardBar() {
     }}>
       <Box sx={{ display:'flex', alignItems:'center', gap:2 }}>
         <Chip
-          label="Sown WorkSpaces"
+          label={board?.title}
           icon={<DashboardIcon/>}
           onClick={() => {}}
           sx={MENU_STYLES} />
         <Chip
-          label="Public/Private Workspace"
+          label={capitalizeFirstLetter(board?.type)}
           icon={<VpnLockIcon/>}
           onClick={() => {}}
           sx={MENU_STYLES} />

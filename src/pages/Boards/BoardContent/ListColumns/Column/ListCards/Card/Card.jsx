@@ -7,30 +7,10 @@ import { Card as MuiCard } from '@mui/material'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-function Card({ temporaryHiddenMedia
-}) {
-  if (temporaryHiddenMedia) return (
-    <MuiCard sx={{ maxWidth: 345,
-      cursor:'pointer',
-      gap:1,
-      boxShadow:'0 1px 1px rgba(0, 0, 0, 0.2)',
-      overflow:'unset'
-    }}>
-      <CardContent sx={{
-        p:1.5, '&:last-child':{
-          p:1.5
-        }
-      }}>
-        <Typography> SownDev  </Typography>
-      </CardContent>
-      <CardActions sx={{ p:'0 4px 8px 4px' }}>
-        <Button size="small" startIcon={<GroupsIcon/>}>10</Button>
-        <Button size="small" startIcon={<CommentIcon/>}>20</Button>
-        <Button size="small" startIcon={<AttachmentIcon/>}>4</Button>
-
-      </CardActions>
-    </MuiCard>
-  )
+function Card({ card }) {
+  const shouldShowCardActions = () => {
+    return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
+  }
   return (
     <MuiCard sx={{ maxWidth: 345,
       cursor:'pointer',
@@ -38,24 +18,26 @@ function Card({ temporaryHiddenMedia
       boxShadow:'0 1px 1px rgba(0, 0, 0, 0.2)',
       overflow:'unset'
     }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image="https://th.bing.com/th/id/OIP.G6wrRmvN4QcIAku4yL24XQHaD5?rs=1&pid=ImgDetMain"
-        title="green iguana"
-      />
+      {card?.cover &&
+      <CardMedia sx={{ height: 140 }} image={card?.cover} />}
       <CardContent sx={{
         p:1.5, '&:last-child':{
           p:1.5
         }
       }}>
-        <Typography> SownDev  </Typography>
+        <Typography> {card?.title}  </Typography>
       </CardContent>
-      <CardActions sx={{ p:'0 4px 8px 4px' }}>
-        <Button size="small" startIcon={<GroupsIcon/>}>10</Button>
-        <Button size="small" startIcon={<CommentIcon/>}>20</Button>
-        <Button size="small" startIcon={<AttachmentIcon/>}>4</Button>
+      {shouldShowCardActions() && <CardActions sx={{ p:'0 4px 8px 4px' }}>
+        {!!card?.memberIds?.length &&
+        <Button size="small" startIcon={<GroupsIcon/>}>{card?.memberIds?.length}</Button>}
+        {!!card?.comments?.length &&
+        <Button size="small" startIcon={<CommentIcon/>}>{card?.comments?.length}</Button>}
+        {!!card?.attachments?.length &&
+        <Button size="small" startIcon={<AttachmentIcon/>}>{card?.attachments?.length}</Button>}
 
-      </CardActions>
+
+      </CardActions>}
+
     </MuiCard>
   )
 }
