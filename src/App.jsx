@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Board from '~/pages/Boards/_id'
 import Home from './pages/Home'
+
 function App() {
 
 

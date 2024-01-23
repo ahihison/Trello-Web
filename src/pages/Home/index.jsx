@@ -1,11 +1,11 @@
-import Box from '@mui/material/Box'
+import Header from '~/components/Home/Header'
 
-const Home = () => {
+const Layout = () => {
   return (
-    <Box>
-        Home
-    </Box>
+    <div className="text-red-500 font-bold">
+      <Header/>
+    </div>
   )
 }
 
-export default Home
+export default Layout
