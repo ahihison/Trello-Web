@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 function ListColumns({ columns }) {
-  console.log(columns)
+
   return (
     <>
       {/* Box column */}
