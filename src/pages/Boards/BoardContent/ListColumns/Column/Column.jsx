@@ -21,6 +21,7 @@ import { mapOrder } from '~/utils/sort'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 function Column({ column }) {
+
   const {
 
     attributes,
@@ -31,7 +32,6 @@ function Column({ column }) {
     isDragging
   } = useSortable({
     id: column._id,
-
     data:{ ...column }
   })
 
@@ -40,7 +40,8 @@ function Column({ column }) {
     transform: CSS.Translate.toString(transform),
     transition,
     height:'100%',
-    opacity: isDragging ? 0.5 : undefined
+    opacity: isDragging ? 0.5 : undefined,
+    cursor: 'default'
 
   }
 
@@ -63,6 +64,7 @@ function Column({ column }) {
         sx={{
           minWidth:'300px',
           maxWidth:'300px',
+          cursor:'pointer',
           bgcolor:(theme) => (theme.palette.mode === 'dark' ?'#333643':'#ebecf0'),
           ml:2,
           borderRadius:'6px',

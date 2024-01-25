@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 function ListColumns({ columns }) {
-
+  console.log(columns)
   return (
     <>
       {/* Box column */}
@@ -18,7 +18,7 @@ function ListColumns({ columns }) {
           overflowY:'hidden',
           '&::-webkit-scrollbar-track': { m:2 }
         }}>
-          {columns?.map(column => <Column key = {column?.id} column={column}/> )}
+          {columns?.map(column => <Column key = {column?._id} column={column}/> )}
 
           <Box sx={{
             minWidth:'200px',
