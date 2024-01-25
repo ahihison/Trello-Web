@@ -1,10 +1,10 @@
-import { DndContext, DragOverlay, MouseSensor, TouchSensor, closestCorners, defaultDropAnimationSideEffects, useSensor, useSensors } from '@dnd-kit/core'
+import { DndContext, DragOverlay, MouseSensor, TouchSensor, closestCorners, defaultDropAnimationSideEffects, pointerWithin, useSensor, useSensors, rectIntersection, getFirstCollision, closestCenter } from '@dnd-kit/core'
 import {
   arrayMove
 } from '@dnd-kit/sortable'
 import Box from '@mui/material/Box'
 import { cloneDeep } from 'lodash'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { mapOrder } from '~/utils/sort'
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
@@ -30,6 +30,7 @@ function BoardContent({ board }) {
   const [activeDragItemType, setActiveDragItemType] = useState(null)
   const [activeDragItemData, setActiveDragItemData] = useState(null)
   const [oldColumnWhenDraggingCard, setOldColumnWhenDraggingCard] = useState(null)
+  const lastOverId = useRef(null)
 
   useEffect(() => {
 
@@ -173,13 +174,33 @@ function BoardContent({ board }) {
       }
     })
   }
+  const collisionDetectionStrategy = useCallback((args) => {
+    if (activeDragItemType===ACTIVE_DRAG_ITEM_TYPE.COLUMN) return closestCorners({ ...args })
+    const pointerIntersections = pointerWithin(args)
+    const intersections = pointerIntersections?.length > 0 ? pointerIntersections : rectIntersection(args)
+    let overId = getFirstCollision(intersections, 'id')
+    if (overId) {
+      let checkColumn = orderedColumns.find(column => column?._id === overId)
+      if (checkColumn) {
+        overId = closestCenter({ ...args,
+          droppableContainers:args.droppableContainers.filter(container => {return (container?.id!==overId) && (checkColumn?.cardOrderIds?.includes(container.id))})
+        })[0]?.id
+      }
+      lastOverId.current = overId
+      return [{ id:overId }]
+
+    }
+    return lastOverId.current?[{ id:lastOverId.current }]:[]
+  }, [activeDragItemType])
   return (
     <DndContext
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
       sensors={sensors}
-      collisionDetection={closestCorners}
+      //bug flickering and data will be fail when drag card
+      // collisionDetection={closestCorners}
+      collisionDetection={collisionDetectionStrategy}
     >
       <Box sx={{ backgroundColor: 'primary.main',
         bgcolor:(theme) => (theme.palette.mode === 'dark' ?'#172b4d':'#1976d2'),
