@@ -165,7 +165,7 @@ function BoardContent({ board }) {
     setOldColumnWhenDraggingCard(null)
   }
   const customDropAnimation={
-    sideEffect:defaultDropAnimationSideEffects({
+    sideEffects:defaultDropAnimationSideEffects({
       styles:{
         active:{
           opacity:0.5
