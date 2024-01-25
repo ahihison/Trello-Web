@@ -22,6 +22,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 function Column({ column }) {
   const {
+
     attributes,
     listeners,
     setNodeRef,
@@ -30,6 +31,7 @@ function Column({ column }) {
     isDragging
   } = useSortable({
     id: column._id,
+
     data:{ ...column }
   })
 
@@ -38,7 +40,8 @@ function Column({ column }) {
     transform: CSS.Translate.toString(transform),
     transition,
     height:'100%',
-    opacity: isDragging ? 0.5 : 1
+    opacity: isDragging ? 0.5 : undefined
+
   }
 
   const [anchorEl, setAnchorEl] = React.useState(null)
