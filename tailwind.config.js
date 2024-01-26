@@ -8,6 +8,11 @@ export default {
     extend: {
       height: {
         homeHeader: '60px'
+      },
+      transitionMobileMenu: {
+        'height': '0.3s linear 0.1s',
+        'box-shadow': '0.1s linear 0s',
+        'background-color': '0.1s linear 0s'
       }
     }
   },
