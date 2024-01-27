@@ -9,10 +9,21 @@ export default {
       height: {
         homeHeader: '60px'
       },
-      transitionMobileMenu: {
-        'height': '0.3s linear 0.1s',
-        'box-shadow': '0.1s linear 0s',
-        'background-color': '0.1s linear 0s'
+      transitionProperty: {
+        'height': '600px',
+        'shadow': 'box-shadow',
+        'bg': 'background-color'
+      },
+      transitionDuration: {
+        '300': '0.3s',
+        '100': '0.1s'
+      },
+      transitionTimingFunction: {
+        'linear': 'linear'
+      },
+      transitionDelay: {
+        '100': '0.1s',
+        '0': '0s'
       }
     }
   },
