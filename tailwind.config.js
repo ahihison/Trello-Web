@@ -9,6 +9,9 @@ export default {
       height: {
         homeHeader: '60px'
       },
+      backgroundImage: theme => ({
+        'wave': 'url(\'https://images.ctfassets.net/rz1oowkt5gyp/7lTGeXbBRNRLaVk2MdBjtJ/99c266ed4cb8cc63bd0c388071f01ff6/white-wave-bg.svg\')'
+      }),
       transitionProperty: {
         'height': '600px',
         'shadow': 'box-shadow',
