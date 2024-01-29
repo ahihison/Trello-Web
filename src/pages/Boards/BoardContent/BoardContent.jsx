@@ -1,4 +1,4 @@
-import { DndContext, DragOverlay, MouseSensor, TouchSensor, closestCorners, defaultDropAnimationSideEffects, pointerWithin, useSensor, useSensors, rectIntersection, getFirstCollision, closestCenter } from '@dnd-kit/core'
+import { DndContext, DragOverlay, MouseSensor, TouchSensor, closestCorners, defaultDropAnimationSideEffects, getFirstCollision, pointerWithin, useSensor, useSensors } from '@dnd-kit/core'
 import {
   arrayMove
 } from '@dnd-kit/sortable'
@@ -177,12 +177,15 @@ function BoardContent({ board }) {
   const collisionDetectionStrategy = useCallback((args) => {
     if (activeDragItemType===ACTIVE_DRAG_ITEM_TYPE.COLUMN) return closestCorners({ ...args })
     const pointerIntersections = pointerWithin(args)
-    const intersections = pointerIntersections?.length > 0 ? pointerIntersections : rectIntersection(args)
-    let overId = getFirstCollision(intersections, 'id')
+    if (!pointerIntersections?.length) return
+
+    // const intersections = pointerIntersections?.length > 0 ? pointerIntersections : rectIntersection(args)
+
+    let overId = getFirstCollision(pointerIntersections, 'id')
     if (overId) {
       let checkColumn = orderedColumns.find(column => column?._id === overId)
       if (checkColumn) {
-        overId = closestCenter({ ...args,
+        overId = closestCorners({ ...args,
           droppableContainers:args.droppableContainers.filter(container => {return (container?.id!==overId) && (checkColumn?.cardOrderIds?.includes(container.id))})
         })[0]?.id
       }
