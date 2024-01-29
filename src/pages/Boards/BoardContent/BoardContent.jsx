@@ -3,12 +3,13 @@ import {
   arrayMove
 } from '@dnd-kit/sortable'
 import Box from '@mui/material/Box'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { mapOrder } from '~/utils/sort'
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
 import ListColumns from './ListColumns/ListColumns'
+import { generatePlaceholderCard } from '~/utils/formatters'
 const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN:'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
   CARD:'ACTIVE_DRAG_ITEM_TYPE_CARD'
@@ -57,6 +58,10 @@ function BoardContent({ board }) {
       if (nextActiveColumn) {
         //delete card in old column when drag over new column
         nextActiveColumn.cards = nextActiveColumn.cards.filter(card => card._id !== activeDraggingCardId)
+        //update temp empty card when column empty card
+        if (isEmpty(nextActiveColumn.cards)) {
+          nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
+        }
         //update cardOrderIds
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(card => card._id)
       }
@@ -64,6 +69,9 @@ function BoardContent({ board }) {
       if (nextOverColumn) {
         //check if card already in new column then delete it
         nextOverColumn.cards = nextOverColumn.cards.filter(card => card._id !== activeDraggingCardId)
+
+        //if column has a card need to remove card empty 
+        nextOverColumn.cards = nextOverColumn.cards.filter(card => !card?.FE_PlaceholderCard)
         //add card to correct index in new column
         const rebuild_ActiveDraggingCardData = {
           ...activeDraggingCardData,
