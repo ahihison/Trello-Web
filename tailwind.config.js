@@ -4,8 +4,12 @@ export default {
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}'
   ],
+
   theme: {
     extend: {
+      colors: {
+        primaryTrello: '#0065ff'
+      },
       height: {
         homeHeader: '60px'
       },
@@ -30,6 +34,7 @@ export default {
       }
     }
   },
+
   plugins: []
 }
 
