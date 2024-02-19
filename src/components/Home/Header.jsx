@@ -21,7 +21,7 @@ const Header = () => {
           <div className='hidden md:flex'>{
             <ul className='flex'>
               {dataHeader.map((item) => (
-                <li key={item.id} className='h-[70px] flex items-center justify-between text-[16px] px-4 pb-4 pt-5 hover:text-[#0065ff]'>
+                <li key={item.id} className='h-[70px] flex items-center justify-between text-[16px] px-4 pb-4 pt-5 cursor-pointer hover:text-[#0065ff]'>
                   <span>{item.value}</span>
                   <KeyboardArrowDownIcon sx={{ fontSize:'16px' }}/>
                 </li>
