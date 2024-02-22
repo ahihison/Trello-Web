@@ -37,11 +37,14 @@ function BoardBar( { board } ) {
       '&::-webkit-scrollbar-track': { m:2 }
     }}>
       <Box sx={{ display:'flex', alignItems:'center', gap:2 }}>
-        <Chip
-          label={board?.title}
-          icon={<DashboardIcon/>}
-          onClick={() => {}}
-          sx={MENU_STYLES} />
+        <Tooltip title={board?.description}>
+          <Chip
+            label={board?.title}
+            icon={<DashboardIcon/>}
+            onClick={() => {}}
+            sx={MENU_STYLES} />
+        </Tooltip>
+
         <Chip
           label={capitalizeFirstLetter(board?.type)}
           icon={<VpnLockIcon/>}
