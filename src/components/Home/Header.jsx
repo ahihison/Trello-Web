@@ -58,7 +58,7 @@ const Header = () => {
 
               ))}
 
-              <button className='text-white w-full mt-6 text-xl  md:flex bg-[#172b4d] hover:bg-[#505f79] h-full p-4 items-center  xl:mx-14' ><a href="/board">Go to your boards</a> </button>
+              <button className='text-white w-full mt-6 text-xl  md:flex bg-[#172b4d] hover:bg-[#505f79] h-full p-4 items-center  xl:mx-14' ><a href="/board" className='w-full'>Go to your boards</a> </button>
 
 
             </ul>
