@@ -47,7 +47,8 @@ const theme = extendTheme({
                     '*::-webkit-scrollbar-thumb:hover': {
                         backgroundColor: 'white'
 
-                    }
+                    },
+                    backgroundColor: 'white'
 
                 }
             }

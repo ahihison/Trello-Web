@@ -13,8 +13,7 @@ const Header = () => {
   }
   return (
 
-    <div className={' w-full text-[#172b4d] text-xl  transition-all z-10 h-[60px]'}>
-
+    <div className={' w-full text-[#172b4d] text-xl  transition-all z-10 h-[60px] fixed overflow-hidden'}>
       <div className={'bg-white w-full flex gap-x-3 items-center  z-50 fixed top-0 h-[60px] justify-between'}>
         <div className='flex  xl:mx-14'>
           <img src="/logo.svg" alt="trello logo" className="p-4 text-white"/>

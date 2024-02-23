@@ -1,9 +1,8 @@
 
+import CancelIcon from '@mui/icons-material/Cancel'
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 import { Button, Dialog, Slide, TextField } from '@mui/material'
 import { forwardRef, useState } from 'react'
-import HighlightOffIcon from '@mui/icons-material/HighlightOff'
-import CancelIcon from '@mui/icons-material/Cancel'
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />
 })
@@ -18,9 +17,9 @@ const Hero = () => {
   }
 
   return (
-    <>   <div className=" h-[90vh] bg-hero flex w-full ">
+    <>   <div className="bg-hero flex w-full h-[100vh] relative">
       <div className="lg:mx-20  md:mx-6 lg:mt-20 md:mt-18 md:flex  ">
-        <div className="md:w-1/2 w-full flex flex-col gap-y-4 px-4 py-28 text-white gap-x-2  " >
+        <div className="md:w-1/2 w-full flex flex-col gap-y-4 px-4 md:py-28 pt-24 text-white gap-x-2  " >
           <h1 className="lg:text-5xl md:text-4xl text-3xl font-medium text-center md:text-start md:leading-tight">Trello brings all your tasks, teammates, and tools together</h1>
           <p className="text-xl text-center md:text-start">Keep everything in the same place—even if your team isn’t.</p>
           <div className='flex  w-full justify-between items-center gap-4 text-white flex-col md:items-start'>
@@ -100,7 +99,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="md:w-1/2 gap-y-4 px-4 py-28 text-white gap-x-2 ">
+        <div className="md:w-1/2 gap-y-4 px-4 md:py-28 text-white gap-x-2 ">
 
           <img src = "/TrelloUICollage_4x.webp" alt="hero" className="" />
 
