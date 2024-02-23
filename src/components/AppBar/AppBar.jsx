@@ -74,8 +74,9 @@ function AppBar() {
               </InputAdornment>
             ),
             endAdornment:(
-              search && <CloseIcon fontSize='small' sx={{ color:'white', cursor:'pointer' }} onClick={clearTextSearch}/>
-
+              <InputAdornment position="end">
+                <CloseIcon fontSize='small' sx={{ color:'white', cursor:'pointer' }} onClick={clearTextSearch}/>
+              </InputAdornment>
             )
           }}
           sx={{ minWidth:'120px', maxWidth:'180px',
