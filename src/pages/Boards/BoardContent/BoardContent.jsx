@@ -1,4 +1,4 @@
-import { DndContext, DragOverlay, MouseSensor, TouchSensor, closestCorners, defaultDropAnimationSideEffects, getFirstCollision, pointerWithin, useSensor, useSensors } from '@dnd-kit/core'
+import { DndContext, DragOverlay, closestCorners, defaultDropAnimationSideEffects, getFirstCollision, pointerWithin, useSensor, useSensors } from '@dnd-kit/core'
 import {
   arrayMove
 } from '@dnd-kit/sortable'
@@ -10,6 +10,10 @@ import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
 import ListColumns from './ListColumns/ListColumns'
 import { generatePlaceholderCard } from '~/utils/formatters'
+
+import {
+  MouseSensor,
+  TouchSensor } from '~/customLibraries/dndKitSensor'
 const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN:'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
   CARD:'ACTIVE_DRAG_ITEM_TYPE_CARD'
@@ -70,7 +74,7 @@ function BoardContent({ board }) {
         //check if card already in new column then delete it
         nextOverColumn.cards = nextOverColumn.cards.filter(card => card._id !== activeDraggingCardId)
 
-        //if column has a card need to remove card empty 
+        //if column has a card need to remove card empty
         nextOverColumn.cards = nextOverColumn.cards.filter(card => !card?.FE_PlaceholderCard)
         //add card to correct index in new column
         const rebuild_ActiveDraggingCardData = {

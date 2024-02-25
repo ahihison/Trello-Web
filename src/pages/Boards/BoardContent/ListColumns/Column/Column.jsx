@@ -22,6 +22,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
+import { toast } from 'react-toastify'
 function Column({ column }) {
 
   const {
@@ -62,8 +63,14 @@ function Column({ column }) {
   }
   const [newCardTitle, setNewCardTitle] = useState('')
   const addNewColumn = () => {
-    if (newCardTitle.trim() === '') return
-    console.log('Add new column', newCardTitle)
+    if (newCardTitle.trim() === '') {
+      toast.error('Please enter card title', {
+        position:'bottom-right'
+      })
+
+      return
+    }
+
 
     setOpenNewCardForm(false)
     setOpenNewCardForm('')
@@ -197,6 +204,7 @@ function Column({ column }) {
                 size="small"
                 variant='outlined'
                 autoFocus
+                data-no-dnd="true"
                 value={newCardTitle}
                 onChange={(e) => setNewCardTitle(e.target.value)}
 
@@ -226,6 +234,7 @@ function Column({ column }) {
                 }}/>
               <Box sx={{ display:'flex', alignItems:'center', gap:0.5 }}>
                 <Button
+                  data-no-dnd="true"
                   onClick={addNewColumn}
                   variant='contained' color="success" size='small' sx={{
                     boxShadow:'none',
