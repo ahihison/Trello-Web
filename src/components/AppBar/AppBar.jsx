@@ -109,10 +109,7 @@ function AppBar() {
 
         </Tooltip>
         <Tooltip title="Information">
-
           <HelpOutlineIcon sx={{ cursor:'pointer', color:'white' }}/>
-
-
         </Tooltip>
         <Profile/>
       </Box>

@@ -23,6 +23,8 @@ import { CSS } from '@dnd-kit/utilities'
 import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
+import { createNewCardAPI } from '~/apis'
+import { useUpdateColumn } from '~/customHooks/store'
 function Column({ column }) {
 
   const {
@@ -49,6 +51,7 @@ function Column({ column }) {
   }
 
   const [anchorEl, setAnchorEl] = React.useState(null)
+  const setColumn = useUpdateColumn(state => state.setColumn)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -62,7 +65,7 @@ function Column({ column }) {
     setNewCardTitle('')
   }
   const [newCardTitle, setNewCardTitle] = useState('')
-  const addNewColumn = () => {
+  const addNewColumn = async() => {
     if (newCardTitle.trim() === '') {
       toast.error('Please enter card title', {
         position:'bottom-right'
@@ -70,6 +73,19 @@ function Column({ column }) {
 
       return
     }
+    const newCardData = {
+      title: newCardTitle,
+      boardId: column.boardId,
+      columnId: column._id
+
+    }
+    // API call to create new card
+    const responseCard = await createNewCardAPI(newCardData)
+    const newColumn = { ...column }
+    newColumn.cards.push(responseCard)
+    newColumn.cardOrderIds.push(responseCard._id)
+    setColumn(newColumn)
+    // Update the column state
 
 
     setOpenNewCardForm(false)
