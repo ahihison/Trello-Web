@@ -7,18 +7,35 @@ import TextField from '@mui/material/TextField'
 import { useState } from 'react'
 import Column from './Column/Column'
 import { toast } from 'react-toastify'
+import { useUpdateBoard } from '~/customHooks/store'
+import { createNewColumnAPI } from '~/apis'
 function ListColumns({ columns }) {
+  const board = useUpdateBoard(state => state.board)
+  const setBoard = useUpdateBoard(state => state.setBoard)
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleNewColumnForm = () => {setOpenNewColumnForm(!openNewColumnForm)
     setNewColumnTitle('')
   }
   const [newColumnTitle, setNewColumnTitle] = useState('')
-  const addNewColumn = () => {
+  const addNewColumn = async() => {
     if (newColumnTitle.trim() === '')
     {
       toast.error('Please enter column title')
       return
     }
+    // API call to create new column
+    const newColumnData = {
+      title: newColumnTitle,
+
+      boardId:board?._id
+    }
+
+    const columnResponse = await createNewColumnAPI(newColumnData)
+
+    // Update the board state
+    const newBoard = { ...board }
+    newBoard.columns.push(columnResponse)
+    setBoard(newBoard)
 
     setOpenNewColumnForm(false)
     setNewColumnTitle('')
