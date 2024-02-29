@@ -9,6 +9,7 @@ import Column from './Column/Column'
 import { toast } from 'react-toastify'
 import { useUpdateBoard } from '~/customHooks/store'
 import { createNewColumnAPI } from '~/apis'
+import { generatePlaceholderCard } from '~/utils/formatters'
 function ListColumns({ columns }) {
   const board = useUpdateBoard(state => state.board)
   const setBoard = useUpdateBoard(state => state.setBoard)
@@ -31,7 +32,9 @@ function ListColumns({ columns }) {
     }
 
     const columnResponse = await createNewColumnAPI(newColumnData)
-
+    //update to drog drag card to the new column
+    columnResponse.cards = [generatePlaceholderCard(columnResponse)]
+    columnResponse.cardOrderIds = [generatePlaceholderCard(columnResponse)._id]
     // Update the board state
     const newBoard = { ...board }
     newBoard.columns.push(columnResponse)

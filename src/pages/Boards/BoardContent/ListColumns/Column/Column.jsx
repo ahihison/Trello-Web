@@ -1,4 +1,7 @@
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import AddCardIcon from '@mui/icons-material/AddCard'
+import CloseIcon from '@mui/icons-material/Close'
 import Cloud from '@mui/icons-material/Cloud'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import ContentCut from '@mui/icons-material/ContentCut'
@@ -13,18 +16,14 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import TextField from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import React, { useState } from 'react'
-import ListCards from './ListCards/ListCards'
-import { mapOrder } from '~/utils/sort'
-import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
-import TextField from '@mui/material/TextField'
-import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
 import { createNewCardAPI } from '~/apis'
 import { useUpdateColumn } from '~/customHooks/store'
+import ListCards from './ListCards/ListCards'
 function Column({ column }) {
 
   const {
@@ -59,7 +58,7 @@ function Column({ column }) {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+  const orderedCards = column.cards
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
   const toggleOpenNewCardForm = () => {setOpenNewCardForm(!openNewCardForm)
     setNewCardTitle('')
@@ -81,6 +80,8 @@ function Column({ column }) {
     }
     // API call to create new card
     const responseCard = await createNewCardAPI(newCardData)
+
+
     const newColumn = { ...column }
     newColumn.cards.push(responseCard)
     newColumn.cardOrderIds.push(responseCard._id)

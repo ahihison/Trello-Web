@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 const useUpdateBoard = create(set => ({
-  board: {},
+  board: null,
   setBoard: (newBoard) => set({ board: newBoard })
 }))
 
