@@ -21,9 +21,10 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { createNewCardAPI } from '~/apis'
-import { useUpdateColumn } from '~/customHooks/store'
+import { createNewCardAPI, deleteColumnDetailApi } from '~/apis'
+import { useUpdateBoard, useUpdateColumn } from '~/customHooks/store'
 import ListCards from './ListCards/ListCards'
+import { useConfirm } from 'material-ui-confirm'
 function Column({ column }) {
 
   const {
@@ -51,6 +52,8 @@ function Column({ column }) {
 
   const [anchorEl, setAnchorEl] = React.useState(null)
   const setColumn = useUpdateColumn(state => state.setColumn)
+  const board = useUpdateBoard(state => state.board)
+  const setBoard = useUpdateBoard(state => state.setBoard)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -78,19 +81,55 @@ function Column({ column }) {
       columnId: column._id
 
     }
+
     // API call to create new card
     const responseCard = await createNewCardAPI(newCardData)
 
 
     const newColumn = { ...column }
-    newColumn.cards.push(responseCard)
-    newColumn.cardOrderIds.push(responseCard._id)
+
+    if (newColumn.cards.some(card => card.FE_PlaceholderCard))
+    {
+      newColumn.cards = [responseCard]
+      newColumn.cardOrderIds = [responseCard._id]
+    } else {
+      newColumn.cards.push(responseCard)
+      newColumn.cardOrderIds.push(responseCard._id)
+    }
+
+
     setColumn(newColumn)
     // Update the column state
 
 
     setOpenNewCardForm(false)
     setOpenNewCardForm('')
+  }
+  // Delete column
+  const confirmDeleteColumn = useConfirm()
+
+  const handleDeleteColumn = () => {
+    confirmDeleteColumn({
+      title:'Delete column',
+      description:'This action will delete the column and all the cards in it. Are you sure you want to delete this column?'
+
+    })
+      .then(async() => {
+        // Delete column
+        // Update the column state
+        const newBoard = { ...board }
+        newBoard.columns = newBoard.columns.filter(c => c._id !== column._id)
+        newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== column._id)
+        setBoard(newBoard)
+        // API call to delete column
+        const result = await deleteColumnDetailApi(column._id)
+
+        toast.success(result?.deleteResult)
+
+      })
+      .catch(() => {
+        // Do nothing
+      })
   }
   return (
     <div ref={setNodeRef}
@@ -144,10 +183,11 @@ function Column({ column }) {
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
+              onClick={handleClose}
               MenuListProps={{
                 'aria-labelledby': 'basic-button'
               }}
-            > <MenuItem>
+            > <MenuItem onClick={toggleOpenNewCardForm}>
                 <ListItemIcon>
                   <AddCardIcon fontSize="small" />
                 </ListItemIcon>
@@ -176,9 +216,11 @@ function Column({ column }) {
 
               </MenuItem>
               <Divider />
-              <MenuItem>
+              <MenuItem
+                onClick={handleDeleteColumn}
+              >
                 <ListItemIcon> <Delete fontSize="small" /> </ListItemIcon>
-                <ListItemText>Remove this column</ListItemText>
+                <ListItemText>Delete this column</ListItemText>
               </MenuItem>
               <MenuItem>
                 <ListItemIcon> <Cloud fontSize="small" /> </ListItemIcon>

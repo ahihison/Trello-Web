@@ -53,11 +53,15 @@ function BoardContent({ board }) {
     newBoard.columnOrderIds = orderedColumnsIds
 
     setBoard(newBoard)
-
+    let prevCardOrderIds =nextColumn.find(c => c._id === prevColumnId)?.cardOrderIds
+    // handle case when drag a last card in column, column empty card will be have a place-holder in id so need to remove it
+    if (prevCardOrderIds[0].includes('placeholder-card')) {
+      prevCardOrderIds = []
+    }
     moveCardToDiffirentcolumnApi({
       activeCardId,
       prevColumnId,
-      prevCardOrderIds:nextColumn.find(c => c._id === prevColumnId)?.cardOrderIds,
+      prevCardOrderIds,
       nextColumnId,
       nextCardOrderIds:newBoard.columns.find(c => c._id === nextColumnId)?.cardOrderIds
     })
@@ -189,6 +193,7 @@ function BoardContent({ board }) {
           columnToUpdate.cardOrderIds = dndOrderedCardIds
           columnToUpdate.cards = dndOrderedCards
         }
+
         setBoard(newBoard)
 
         updateColumnDetailApi(oldColumnWhenDraggingCard._id, { cardOrderIds:dndOrderedCardIds })
