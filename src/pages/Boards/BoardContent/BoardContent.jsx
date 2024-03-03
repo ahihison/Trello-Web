@@ -97,7 +97,7 @@ function BoardContent({ board }) {
         }
         //update cardOrderIds
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(card => card._id)
-
+        console.log('nextActiveColumn', nextActiveColumn)
       }
       //new column
       if (nextOverColumn) {
