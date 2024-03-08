@@ -7,9 +7,13 @@ import theme from '~/theme'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { ConfirmProvider } from 'material-ui-confirm'
+import { GoogleOAuthProvider } from '@react-oauth/google'
+
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <CssVarsProvider theme={theme}>
+
       <ConfirmProvider
         defaultOptions={
           {
@@ -27,9 +31,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         }
       >
         <CssBaseline/>
-        <App />
+        <GoogleOAuthProvider clientId="901628952757-84vq0sp5b11oit2qvefur9aerenlg665.apps.googleusercontent.com">
+          <App />
+        </GoogleOAuthProvider>
         <ToastContainer position='bottom-left' theme='colored'/>
       </ConfirmProvider>
+
     </CssVarsProvider>
 
   </React.StrictMode>
