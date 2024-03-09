@@ -32,7 +32,7 @@ const Header = () => {
           </div>
         </div>
 
-        <button className='text-white text-xl hidden md:flex bg-[#172b4d] hover:bg-[#505f79] h-full px-6 py-2 items-center  xl:mx-14' ><a href="/board">Go to boards</a> </button>
+        <a href="/board" className='text-white text-xl hidden md:flex bg-[#172b4d] hover:bg-[#505f79] h-full px-6 py-2 items-center  xl:mx-14'><button className='flex items-center justify-center' >Go to boards</button></a>
         <div className='cursor-pointer md:hidden xl:hidden '>
           {openHeaderMobile ? <CloseIcon sx={{ width:'40px', height:'40px', color:'black' }} onClick ={toggleMenuMobile} /> : <MenuIcon sx={{ width:'40px', height:'40px', color:'black' }} onClick ={toggleMenuMobile} />}
 

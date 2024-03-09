@@ -3,29 +3,35 @@ import { ReactComponent as Atlassian } from '~/assets/atlassian.svg'
 import { ReactComponent as ImgLeft } from '~/assets/login-imgleft.svg'
 import { ReactComponent as ImgRight } from '~/assets/login-imgright.svg'
 import { ReactComponent as TrelloIcon } from '~/assets/trello.svg'
-import { useForm } from 'react-hook-form'
+
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useGoogleLogin } from '@react-oauth/google'
+import axios from 'axios'
+import { useForm } from 'react-hook-form'
 import { FcGoogle } from 'react-icons/fc'
 import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import axios from 'axios'
-import { loginWithGoogle } from '~/apis/auth'
-import { useEffect, useRef } from 'react'
+import { loginApi, loginWithGoogle } from '~/apis/auth'
+import { useAuth } from '~/customHooks/useAuth'
 const schema = yup
   .object({
     email: yup.string().email('Email is invalid').required('Email is required'),
-    password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-    userName: yup.string().min(6, 'Username must be at least 6 characters').required('Username is required')
-  }).required()
+    password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required')
 
-export default function SignUp() {
+  }).required()
+export default function Login() {
+  // const [checkLogin, setCheckLogin] = useState(false)
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm({ resolver: yupResolver(schema) })
-  const onSubmit = (data) => console.log(data)
-
+  const onSubmit = async(data) => {
+    console.log(data)
+    const result = await loginApi(data)
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useAuth()
+    console.log('🚀 ~ onSubmit ~ result:', result)
+  }
   const getDataFromGoogle = async (token) => {
     console.log('🚀 ~ getDataFromGoogle ~ token', token)
     const userInfo = await axios
@@ -41,12 +47,13 @@ export default function SignUp() {
 
       const userInfo = await getDataFromGoogle(tokenResponse.access_token)
       const data = await loginWithGoogle(userInfo)
-      console.log('🚀 ~ SignUp ~ data:', data)
+      console.log('🚀 ~ Login ~ data:', data)
     }
   })
 
   return (
     <div className='w-full h-[100vh] bg-[#fafbfc] fixed top-0'>
+
       <ImgLeft className="absolute w-96 bottom-0 -z-20" />
       <ImgRight className="absolute bottom-0 right-0 w-96 -z-10"/>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -56,24 +63,20 @@ export default function SignUp() {
             <h1 className='font-bold text-3xl'>Trello</h1>
           </div>
           <div className='font-medium text-[16px] text-[#172b4d]'>Sign up to continue</div>
-
           <div className='w-full h-10 border-gray-300  border-2 rounded-sm '>
             <input {...register('email')} className={`w-full h-full py-4 px-2 bg-gray-100 hover:bg-gray-200 focus:bg-white placeholder:text-sm  focus:outline-blue-500 ${errors.email?'focus:outline-red-500':''}` } placeholder='Enter your email' />
             <p className='text-red-500 text-[12px] pt-1'>{errors.email?.message}</p>
           </div>
           <div className='w-full h-10 border-gray-300  border-2 rounded-sm '>
-            <input {...register('userName')} type="text" className={`w-full h-full py-4 px-2 bg-gray-100 hover:bg-gray-200 focus:bg-white placeholder:text-sm  focus:outline-blue-500 ${errors.userName?'focus:outline-red-500':''}` } placeholder='Enter your username' />
-            <p className='text-red-500 text-[12px] pt-1'>{errors.userName?.message}</p>
-          </div>
-          <div className='w-full h-10 border-gray-300  border-2 rounded-sm '>
-            <input {...register('password')} type="password"className={`w-full h-full py-4 px-2 bg-gray-100 hover:bg-gray-200 focus:bg-white placeholder:text-sm  focus:outline-blue-500 ${errors.password?'focus:outline-red-500':''}` } placeholder='Enter your password' />
+            <input {...register('password')} type="text" className={`w-full h-full py-4 px-2 bg-gray-100 hover:bg-gray-200 focus:bg-white placeholder:text-sm  focus:outline-blue-500 ${errors.password?'focus:outline-red-500':''}` } placeholder='Enter your password' />
             <p className='text-red-500 text-[12px] pt-1'>{errors.password?.message}</p>
           </div>
-
-          <p className='text-[12px] text-gray-500'>By signing up, I accept the Atlassian
+          <p className='text-[12px] text-gray-500'>By Loging up, I accept the Atlassian
             <a href="https://www.atlassian.com/legal/cloud-terms-of-service" className='text-blue-500 hover:underline'> Cloud Terms of Service</a> and acknowledge the
             <a href="https://www.atlassian.com/legal/privacy-policy#what-this-policy-covers" className='text-blue-500 hover:underline'> Privacy Policy</a>
          .</p>
+
+
           <button className='w-full h-11 bg-[#0052cc] hover:bg-[#0065ff] text-white cursor-pointer rounded-sm'>
             <span className='font-medium text-sm'>Sign Up</span>
           </button>
@@ -87,7 +90,7 @@ export default function SignUp() {
 
             </button>
 
-            <a href="/login" className='text-blue-500 hover:underline text-sm '>Already have an Atlassian account? Log in</a>
+            <a href="/signup" className='text-blue-500 hover:underline text-sm '>Already have an Atlassian account? Sign up</a>
             <hr className='w-full bg-neutral-600' />
           </div>
 
@@ -100,8 +103,8 @@ export default function SignUp() {
 
 
         </div>
-
       </form>
+
     </div>
   )
 }
