@@ -12,6 +12,7 @@ import { FcGoogle } from 'react-icons/fc'
 import * as yup from 'yup'
 import { loginApi, loginWithGoogle } from '~/apis/auth'
 import { useAuth } from '~/customHooks/useAuth'
+import { Navigate, useNavigate } from 'react-router-dom'
 const schema = yup
   .object({
     email: yup.string().email('Email is invalid').required('Email is required'),
@@ -25,12 +26,16 @@ export default function Login() {
     handleSubmit,
     formState: { errors }
   } = useForm({ resolver: yupResolver(schema) })
+  const navigate = useNavigate()
   const onSubmit = async(data) => {
-    console.log(data)
+
     const result = await loginApi(data)
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useAuth()
+
+
     console.log('🚀 ~ onSubmit ~ result:', result)
+    localStorage.setItem('accessToken', JSON.stringify(result.accessToken))
+    navigate('/')
+
   }
   const getDataFromGoogle = async (token) => {
     console.log('🚀 ~ getDataFromGoogle ~ token', token)
@@ -78,7 +83,7 @@ export default function Login() {
 
 
           <button className='w-full h-11 bg-[#0052cc] hover:bg-[#0065ff] text-white cursor-pointer rounded-sm'>
-            <span className='font-medium text-sm'>Sign Up</span>
+            <span className='font-medium text-sm'>Sign In</span>
           </button>
           <div className='w-full flex items-center flex-col gap-4'>
             <span className='text-neutral-500'>Or continue with:</span>
