@@ -4,6 +4,9 @@ import SignUp from './components/Auth/SignUp'
 import Home from './pages/Home'
 
 import Login from './components/Auth/Login'
+import PublicRoutes from './components/Auth/publicRoute'
+import PrivateRoutes from './components/Auth/privateRoute'
+
 // import RequireAuth from './components/Auth/RequireAuth'
 function App() {
 
@@ -12,12 +15,14 @@ function App() {
 
     <BrowserRouter>
       <Routes>
-        <Route path="/signup" element={<SignUp />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        {/* <Route element={<RequireAuth/>}> */}
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/board" element={<Board />}></Route>
-        {/* </Route> */}
+        <Route element={<PublicRoutes />}>
+          <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+        </Route>
+        <Route element={<PrivateRoutes />}>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/board" element={<Board />}></Route>
+        </Route>
 
       </Routes>
     </BrowserRouter>
