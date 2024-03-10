@@ -54,7 +54,9 @@ function BoardContent({ board }) {
 
     setBoard(newBoard)
     let prevCardOrderIds =nextColumn.find(c => c._id === prevColumnId)?.cardOrderIds
+    console.log('🚀 ~ moveCardToDifferentColumn ~ prevCardOrderIds:', prevCardOrderIds)
     // handle case when drag a last card in column, column empty card will be have a place-holder in id so need to remove it
+
     if (prevCardOrderIds[0].includes('placeholder-card')) {
       prevCardOrderIds = []
     }
@@ -97,7 +99,7 @@ function BoardContent({ board }) {
         }
         //update cardOrderIds
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(card => card._id)
-        console.log('nextActiveColumn', nextActiveColumn)
+
       }
       //new column
       if (nextOverColumn) {
@@ -105,7 +107,9 @@ function BoardContent({ board }) {
         nextOverColumn.cards = nextOverColumn.cards.filter(card => card._id !== activeDraggingCardId)
 
         //if column has a card need to remove card empty
-        nextOverColumn.cards = nextOverColumn.cards.filter(card => !card?.FE_PlaceholderCard)
+        // nextOverColumn.cards = nextOverColumn.cards.filter(card => !card?.FE_PlaceholderCard)
+
+
         //add card to correct index in new column
         const rebuild_ActiveDraggingCardData = {
           ...activeDraggingCardData,
@@ -116,7 +120,6 @@ function BoardContent({ board }) {
       }
       if (triggerFrom==='handleDragEnd') {
         moveCardToDifferentColumn(activeDraggingCardId, oldColumnWhenDraggingCard._id, nextOverColumn._id, nextColumns)
-
       }
 
       return nextColumns
