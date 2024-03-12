@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField'
 import { useState } from 'react'
 import Column from './Column/Column'
 import { toast } from 'react-toastify'
-import { useUpdateBoard } from '~/customHooks/store'
+import { useUpdateBoard } from '~/zustand/store'
 import { createNewColumnAPI } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 function ListColumns({ columns }) {

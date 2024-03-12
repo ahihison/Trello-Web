@@ -11,7 +11,7 @@ import Card from './ListColumns/Column/ListCards/Card/Card'
 import ListColumns from './ListColumns/ListColumns'
 
 import { moveCardToDiffirentcolumnApi, updateBoardDetailApi, updateColumnDetailApi } from '~/apis'
-import { useUpdateBoard } from '~/customHooks/store'
+import { useUpdateBoard } from '~/zustand/store'
 import {
   MouseSensor,
   TouchSensor

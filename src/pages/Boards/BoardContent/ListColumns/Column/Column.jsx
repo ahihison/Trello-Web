@@ -22,7 +22,7 @@ import Typography from '@mui/material/Typography'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { createNewCardAPI, deleteColumnDetailApi } from '~/apis'
-import { useUpdateBoard, useUpdateColumn } from '~/customHooks/store'
+import { useUpdateBoard, useUpdateColumn } from '~/zustand/store'
 import ListCards from './ListCards/ListCards'
 import { useConfirm } from 'material-ui-confirm'
 function Column({ column }) {

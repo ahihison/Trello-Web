@@ -9,10 +9,11 @@ import { useGoogleLogin } from '@react-oauth/google'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import { FcGoogle } from 'react-icons/fc'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import * as yup from 'yup'
 import { loginApi, loginWithGoogle } from '~/apis/auth'
-import { useAuth } from '~/customHooks/useAuth'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useUser } from '~/zustand/store'
 const schema = yup
   .object({
     email: yup.string().email('Email is invalid').required('Email is required'),
@@ -21,6 +22,7 @@ const schema = yup
   }).required()
 export default function Login() {
   // const [checkLogin, setCheckLogin] = useState(false)
+  const setUser = useUser((state) => state.setUser)
   const {
     register,
     handleSubmit,
@@ -31,14 +33,14 @@ export default function Login() {
 
     const result = await loginApi(data)
 
-
-    console.log('🚀 ~ onSubmit ~ result:', result)
+    if (result.error) return toast.error(result.error)
     localStorage.setItem('accessToken', JSON.stringify(result.accessToken))
     navigate('/')
+    setUser(result)
 
   }
   const getDataFromGoogle = async (token) => {
-    console.log('🚀 ~ getDataFromGoogle ~ token', token)
+
     const userInfo = await axios
       .get('https://www.googleapis.com/oauth2/v3/userinfo', {
         headers: { Authorization: `Bearer ${token}` }
@@ -52,7 +54,11 @@ export default function Login() {
 
       const userInfo = await getDataFromGoogle(tokenResponse.access_token)
       const data = await loginWithGoogle(userInfo)
-      console.log('🚀 ~ Login ~ data:', data)
+      if (data.error) return toast.error(data.error)
+
+      localStorage.setItem('accessToken', JSON.stringify(data.accessToken))
+      navigate('/')
+      setUser(data)
     }
   })
 
@@ -87,7 +93,9 @@ export default function Login() {
           </button>
           <div className='w-full flex items-center flex-col gap-4'>
             <span className='text-neutral-500'>Or continue with:</span>
-            <button className='w-full h-11 border border-neutral-300 text-white cursor-pointer rounded-sm hover:bg-[#091e4205]' onClick={() => login()}>
+            <button className='w-full h-11 border border-neutral-300 text-white cursor-pointer rounded-sm hover:bg-[#091e4205]' onClick={(e) => {
+              e.preventDefault()
+              login()}}>
               <div className='flex items-center justify-center gap-2'>
                 <FcGoogle size={24}/> <span className='text-neutral-600 font-bold'>Google</span>
 
