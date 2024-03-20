@@ -15,10 +15,10 @@ const useUser = create(
     user: null,
     setUser: (newUser) => set({ user: newUser })
   }),
-    {
-      name: 'user-storage', // name of the item in the storage (must be unique)
-      getStorage: () => localStorage // (optional) by default the 'localStorage' is used
-    }
+  {
+    name: 'user-storage', // name of the item in the storage (must be unique)
+    getStorage: () => localStorage // (optional) by default the 'localStorage' is used
+  }
   )
 
 )

@@ -3,20 +3,25 @@ import { isEmpty } from 'lodash'
 import { useEffect } from 'react'
 import { fetchBoardDetailAPI } from '~/apis'
 import AppBar from '~/components/AppBar/AppBar'
-import { useUpdateBoard, useUpdateColumn } from '~/zustand/store'
+import { useUpdateBoard, useUpdateColumn, useUser } from '~/zustand/store'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { mapOrder } from '~/utils/sort'
 import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
 import { Box, CircularProgress, Typography } from '@mui/material'
+
 function Board() {
   const setBoard = useUpdateBoard((state) => state.setBoard) // Get the setBoard function from the state
   const board = useUpdateBoard((state) => state.board) // Get the board from the state
   const column = useUpdateColumn((state) => state.column) // Get the column from the state
+  const user = useUser((state) => state.user)
+  const setUser = useUser((state) => state.setUser)
+
+
   useEffect(() => {
     const fetchBoardDetail = async () => {
       const boardId = '65d6bb4811db20c610affca6'
-      const board = await fetchBoardDetailAPI(boardId)
+      const board = await fetchBoardDetailAPI(boardId, user, setUser)
       //sort column before set to state
       board.columns = mapOrder(board.columns, board.columnOrderIds, '_id')
       board.columns.forEach(column => {

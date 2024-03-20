@@ -1,8 +1,12 @@
 import axios from 'axios'
 import { API_ROOT } from '~/utils/constants'
+import { fetcher } from './createInstance'
 // BOARD
-export const fetchBoardDetailAPI = async (boardId) => {
-  const response = await axios.get(`${API_ROOT}/v1/boards/${boardId}`)
+export const fetchBoardDetailAPI = async (boardId, user, setUser) => {
+  let axiosJWT = fetcher(user, setUser)
+  const response = await axiosJWT.get(`${API_ROOT}/v1/boards/${boardId}`, {
+    withCredentials: true
+  })
   return response.data
 }
 
