@@ -11,7 +11,7 @@ import Card from './ListColumns/Column/ListCards/Card/Card'
 import ListColumns from './ListColumns/ListColumns'
 
 import { moveCardToDiffirentcolumnApi, updateBoardDetailApi, updateColumnDetailApi } from '~/apis'
-import { useUpdateBoard } from '~/zustand/store'
+import { useUpdateBoard, useUser } from '~/zustand/store'
 import {
   MouseSensor,
   TouchSensor
@@ -38,6 +38,8 @@ function BoardContent({ board }) {
   const [activeDragItemType, setActiveDragItemType] = useState(null)
   const [activeDragItemData, setActiveDragItemData] = useState(null)
   const [oldColumnWhenDraggingCard, setOldColumnWhenDraggingCard] = useState(null)
+  const user = useUser(state => state.user)
+  const setUser = useUser(state => state.setUser)
   const lastOverId = useRef(null)
 
   const moveCardToDifferentColumn = (activeCardId, prevColumnId, nextColumnId, nextColumn) => {
@@ -66,7 +68,7 @@ function BoardContent({ board }) {
       prevCardOrderIds,
       nextColumnId,
       nextCardOrderIds:newBoard.columns.find(c => c._id === nextColumnId)?.cardOrderIds
-    })
+    }, user, setUser)
   }
   useEffect(() => {
 
@@ -199,7 +201,7 @@ function BoardContent({ board }) {
 
         setBoard(newBoard)
 
-        updateColumnDetailApi(oldColumnWhenDraggingCard._id, { cardOrderIds:dndOrderedCardIds })
+        updateColumnDetailApi(oldColumnWhenDraggingCard._id, { cardOrderIds:dndOrderedCardIds }, user, setUser)
       }
     }
     //handle drag column
@@ -221,7 +223,7 @@ function BoardContent({ board }) {
         setBoard(newBoard)
 
         setOrderedColumns(dndOrderedColumns)
-        await updateBoardDetailApi(newBoard._id, { columnOrderIds:dndOrderedColumnIds })
+        await updateBoardDetailApi(newBoard._id, { columnOrderIds:dndOrderedColumnIds }, user, setUser)
       }
       return
     }

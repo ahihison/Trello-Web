@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode'
 
 import { API_ROOT } from '~/utils/constants'
 // eslint-disable-next-line react-hooks/rules-of-hooks
-
+axios.defaults.withCredentials = true
 const refreshToken = async() => {
   try {
     const response = await axios.post(`${API_ROOT}/v1/auth/refresh`, {
@@ -31,6 +31,10 @@ export const fetcher = (user, setUser) => {
         }
         setUser(refreshUser)
         config.headers['token'] = 'Bearer ' + data.accessToken
+      }
+      else {
+        // If the token is not expired, still attach it to the header
+        config.headers['token'] = 'Bearer ' + user.accessToken
       }
       return config
     },

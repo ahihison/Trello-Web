@@ -7,6 +7,8 @@ export const loginWithGoogle = async (data) => {
 }
 
 export const loginApi = async (data) => {
-  const response = await axios.post(`${API_ROOT}/v1/auth/login`, data)
+  const response = await axios.post(`${API_ROOT}/v1/auth/login`, data, {
+    withCredentials: true
+  })
   return response.data
 }

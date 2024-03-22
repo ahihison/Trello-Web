@@ -22,7 +22,7 @@ import Typography from '@mui/material/Typography'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { createNewCardAPI, deleteColumnDetailApi } from '~/apis'
-import { useUpdateBoard, useUpdateColumn } from '~/zustand/store'
+import { useUpdateBoard, useUpdateColumn, useUser } from '~/zustand/store'
 import ListCards from './ListCards/ListCards'
 import { useConfirm } from 'material-ui-confirm'
 function Column({ column }) {
@@ -55,6 +55,8 @@ function Column({ column }) {
   const board = useUpdateBoard(state => state.board)
   const setBoard = useUpdateBoard(state => state.setBoard)
   const open = Boolean(anchorEl)
+  const user = useUser(state => state.user)
+  const setUser = useUser(state => state.setUser)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -83,7 +85,7 @@ function Column({ column }) {
     }
 
     // API call to create new card
-    const responseCard = await createNewCardAPI(newCardData)
+    const responseCard = await createNewCardAPI(newCardData, user, setUser)
 
 
     const newColumn = { ...column }
@@ -122,7 +124,7 @@ function Column({ column }) {
         newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== column._id)
         setBoard(newBoard)
         // API call to delete column
-        const result = await deleteColumnDetailApi(column._id)
+        const result = await deleteColumnDetailApi(column._id, user, setUser)
 
         toast.success(result?.deleteResult)
 

@@ -18,6 +18,8 @@ function ListColumns({ columns }) {
     setNewColumnTitle('')
   }
   const [newColumnTitle, setNewColumnTitle] = useState('')
+  const user = useUpdateBoard(state => state.user)
+  const setUser = useUpdateBoard(state => state.setUser)
   const addNewColumn = async() => {
     if (newColumnTitle.trim() === '')
     {
@@ -31,7 +33,7 @@ function ListColumns({ columns }) {
       boardId:board?._id
     }
 
-    const columnResponse = await createNewColumnAPI(newColumnData)
+    const columnResponse = await createNewColumnAPI(newColumnData, user, setUser)
     //update to drog drag card to the new column
     columnResponse.cards = [generatePlaceholderCard(columnResponse)]
     columnResponse.cardOrderIds = [generatePlaceholderCard(columnResponse)._id]
